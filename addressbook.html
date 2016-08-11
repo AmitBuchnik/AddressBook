@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="shortcut icon" sizes="196x196" href="addressbook.gif">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js" type="application/javascript"></script>
+    <script type="application/javascript">
+        $( document ).one( "mobileinit", function() {
+            $.mobile.filterable.prototype.options.filterCallback = function( index, searchValue ) {
+                // In this function the keyword "this" refers to the element for which the
+                // code must decide whether it is to be filtered or not.
+                // A return value of true indicates that the element referred to by the
+                // keyword "this" is to be filtered.
+                // Returning false indicates that the item is to be displayed.
+                //
+                // your custom filtering logic goes here
+                let cellNumber = $(this).data('id');
+                let name = $(this).data('name');
+
+                if ($.isNumeric(searchValue)) {
+                    return (cellNumber != undefined) ? cellNumber.toLowerCase().indexOf(searchValue) === -1 : false;
+                }
+                else {
+                    return (name != undefined) ? name.toLowerCase().indexOf(searchValue) === -1 : false;
+                }
+            };
+        });
+    </script>
+    <script type="application/javascript" src="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>
+    <script type="application/javascript" src="addressbook.js"></script>
+
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css">
+    <!--<link rel="stylesheet" href="lib/themes/branches.css"/>-->
+    <!--<link rel="stylesheet" href="lib/themes/jquery.mobile.icons.min.css"/>
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css"/>-->
+    <link rel="stylesheet" type="text/css" href="addressbook.css" />
+    <title>Corporate Address Book</title>
+</head>
+<body>
+    <div data-role="page" data-dom-cache="true" id="main">
+        <div data-role="header" data-theme="b">
+            <h1>Corporate Address Book</h1>
+        </div>
+        <div data-role="content" class="ui-content">
+            <input id="filter" data-type="search" placeholder="Search"/>
+            <div data-role="listview" id="list" data-inset="true" data-filter="true"
+                 class="ui-filterable" data-input="#filter"></div>
+        </div>
+        <!--<div data-role="popup" id="details" data-theme="a"
+             style="width: 25%; min-width: 300px; direction: ltr text-align: right; position: fixed; left: 50%; top: 25%; transform: translate(-50%, -25%)">
+            <a href="#" data-rel="back" data-role="button" data-icon="delete" data-iconpos="notext" class="ui-btn-right ui-alt-icon ui-nodisc-icon">Close</a>
+            <div data-role="header" class="ui-corner-all ui-shadow">
+                <h1 id="title"></h1>
+            </div>
+            <div data-role="main">
+                <ul class="snifDetails ui-nodisc-icon">
+                    <li>name: <span id="sName">fdfd</span></li>
+                    <li>address: <span id="sAddress">fd</span></li>
+                    <li>manager: <span id="sManager">fdfdf</span></li>
+                    <li>mobile: <span id="sMangerPhone">fdfdfdfd</span><a id="sCallPhone" href="#" data-role="button"
+                                                                data-icon="phone" data-iconpos="notext" data-inline="true"
+                                                                class="ui-nodisc-icon ui-alt-icon ui-shadow">fdfdfdd</a>
+                        &lt;!&ndash;<a id="sSendMail" href="#" data-role="button" data-icon="mail" data-iconpos="notext"
+                           data-inline="true" class="ui-nodisc-icon ui-alt-icon ui-shadow"></a>&ndash;&gt;
+                    </li>
+                </ul>
+                <div style="text-align: center">
+                    <a id="bShowOnMap"
+                       class="ui-btn ui-btn-inline ui-icon-location ui-btn-icon-left ui-btn-corner-all ui-shadow ui-alt-icon">Map</a>
+                    <a id="bToWaze" href="#"
+                       class="ui-btn ui-btn-inline ui-icon-navigation ui-btn-icon-left ui-btn-corner-all ui-shadow ui-alt-icon">Waze</a>
+                </div>
+            </div>-->
+
+        <div data-role="popup" data-position-to="window" id="details"
+             data-overlay-theme="b" data-theme="a" style="min-width: 250px; min-height: 100px;">
+            <a href="#" data-rel="back" data-role="button" data-icon="delete" data-iconpos="notext"
+               class="ui-btn-right ui-alt-icon ui-nodisc-icon">Close</a>
+            <div data-role="header" class="ui-corner-all ui-shadow">
+                <h1 id="title"></h1>
+            </div>
+            <div data-role="main">
+                <ul class="ui-nodisc-icon" style="line-height: 1.8em;">
+                    <li>Position: <span id="position"></span></li>
+                    <li>Phone: <span id="phone" style="margin-right: 5px"></span><a id="callPhone" href="#" data-role="button"
+                                                           data-icon="phone" data-iconpos="notext" data-inline="true"
+                                                           class="ui-alt-icon ui-shadow"></a></li>
+
+                    <li>Mobile: <span id="mobile" style="margin-right: 5px"></span><a id="callMobile" href="#" data-role="button"
+                                                                data-icon="phone" data-iconpos="notext" data-inline="true"
+                                                                class="ui-alt-icon ui-shadow"></a></li>
+
+                    <li>Mail: <span id="mail" style="margin-right: 5px"></span><a id="sendMail" href="#" data-role="button"
+                                                           data-icon="mail" data-iconpos="notext" data-inline="true"
+                                                           class="ui-alt-icon ui-shadow"></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
